@@ -38,8 +38,7 @@ pipeline {
                 ls -ltr
                 """
             }
-        } 
-   }
+        }    
         stage('Nexus Artifact Upload'){
             steps{
                 script{
@@ -61,6 +60,7 @@ pipeline {
                 }
             }
         }
+    }    
     post {
         always {
             echo 'I will always say Hello again!'
