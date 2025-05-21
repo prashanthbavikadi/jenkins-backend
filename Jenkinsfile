@@ -7,14 +7,20 @@ pipeline {
         disableConcurrentBuilds()
         ansiColor('xterm')
     }
-
     stages {
-        stage('Init') {
+        stage ('read the version'){
+            steps{
+                def packageJson = readJson file: 'package.json'
+                def appVersion = packageJson.version 
+                echo "application vesion ": $appVersion"
+            }
+        }
+        stage('insatll dependencies') {
             steps {
                sh """
-               ls -ltr
                npm install
                ls -ltr 
+               echo "application vesion: $appVersion"
                """
             }
         }   
@@ -31,4 +37,4 @@ pipeline {
             echo 'I will run when pipeline is failure'
         }
     }
-}
+}    
