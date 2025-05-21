@@ -7,14 +7,14 @@ pipeline {
         disableConcurrentBuilds()
         ansiColor('xterm')
     }
-    parameters {
-        choice(name: 'action', choices: ['Apply', 'Destroy'], description: 'Pick something')
+
     }
     stages {
         stage('Init') {
             steps {
                sh """
                ls -ltr
+               npm install
                """
             }
         }   
@@ -31,4 +31,4 @@ pipeline {
             echo 'I will run when pipeline is failure'
         }
     }
-}
+
