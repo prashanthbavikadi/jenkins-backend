@@ -14,6 +14,7 @@ pipeline {
                sh """
                ls -ltr
                npm install
+               ls -ltr 
                """
             }
         }   
