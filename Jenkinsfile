@@ -8,7 +8,6 @@ pipeline {
         ansiColor('xterm')
     }
 
-    }
     stages {
         stage('Init') {
             steps {
@@ -31,4 +30,4 @@ pipeline {
             echo 'I will run when pipeline is failure'
         }
     }
-
+}
