@@ -14,7 +14,7 @@ pipeline {
         stage('Init') {
             steps {
                sh """
-               echo "this is testing the scrit"
+               ls -ltr
                """
             }
         }   
