@@ -62,10 +62,10 @@ pipeline {
         }
         stage('deploy'){
             steps{
-                def params= [
-                    string(name: 'appVersion', value: "${appVersion}")
-                ]
                 script{
+                    def params= [
+                    string(name: 'appVersion', value: "${appVersion}")
+                ]    
                     bulid job: 'backend-deploy', parameters: params, wait:false
                 }
             }
