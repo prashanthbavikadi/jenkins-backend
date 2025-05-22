@@ -60,6 +60,16 @@ pipeline {
                 }
             }
         }
+        stage('deploy'){
+            steps{
+                def params= [
+                    string(name: 'appVersion', value: "${appVersion}")
+                ]
+                script{
+                    bulid job: 'backend-deploy', parameters: params, wait:false
+                }
+            }
+        }
     }    
     post {
         always {
