@@ -2,11 +2,11 @@ pipeline {
     agent {
         label 'AGENT-1'
     }
-    // options {
-    //     timeout(time: 30, unit: 'MINUTES')
-    //     disableConcurrentBuilds()
-    //     ansiColor('xterm')
-    // }
+    options {
+        timeout(time: 30, unit: 'MINUTES')
+        disableConcurrentBuilds()
+        ansiColor('xterm')
+    }
     environment {
         def appVersion = '' //decalartaive
         nexusUrl = 'nexus.jpaws10s.online:8081'
@@ -66,7 +66,7 @@ pipeline {
                     def params= [
                     string(name: 'appVersion', value: "${appVersion}")
                 ]    
-                    bulid job: 'backend-deploy', parameters: params, wait:false
+                    build job: 'backend-deploy', parameters: params, wait:false
                 }
             }
         }
