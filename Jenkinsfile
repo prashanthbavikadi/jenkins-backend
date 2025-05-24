@@ -60,7 +60,7 @@ pipeline {
         //         }
         //     }
         // }
-        stage('deploy'){
+        /* stage('deploy'){
             steps{
                 script{
                     def params= [
@@ -69,7 +69,7 @@ pipeline {
                     build job: 'backend-deploy', parameters: params, wait:false
                 }
             }
-        }
+        } */
     }    
     post {
         always {
