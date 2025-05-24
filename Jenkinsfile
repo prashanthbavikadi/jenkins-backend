@@ -22,6 +22,11 @@ pipeline {
                 }
             }
         }
+        stage('Print Version') {
+            steps {
+                echo "App version is ${appVersion}"
+            }
+        }    
         stage('insatll dependencies') {
             steps{
                sh """
