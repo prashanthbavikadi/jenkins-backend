@@ -7,11 +7,11 @@ pipeline {
         disableConcurrentBuilds()
         ansiColor('xterm')
     }
-    environment {
-        def appVersion = '' //decalartaive
-        nexusUrl = 'nexus.jpaws10s.online:8081'
-        region = "us-east-1" 
-    }
+    // environment {
+    //     def appVersion = '' //decalartaive
+    //     nexusUrl = 'nexus.jpaws10s.online:8081'
+    //     region = "us-east-1" 
+    // }
     stages {
         stage('read the version'){
             steps{
@@ -31,35 +31,35 @@ pipeline {
                """
             }
         } 
-        stage ('build'){
-            steps{
-                sh """
-                zip -q -r backend-${appVersion}.zip * -x Jenkinsfile -x backend-${appVersion}.zip
-                ls -ltr
-                """
-            }
-        }    
-        stage('Nexus Artifact Upload'){
-            steps{
-                script{
-                    nexusArtifactUploader(
-                        nexusVersion: 'nexus3',
-                        protocol: 'http',
-                        nexusUrl: "${nexusUrl}",
-                        groupId: 'com.expense',
-                        version: "${appVersion}",
-                        repository: "backend",
-                        credentialsId: 'nexus-auth',
-                        artifacts: [
-                            [artifactId: "backend" ,
-                            classifier: '',
-                            file: "backend-" + "${appVersion}" + '.zip',
-                            type: 'zip']
-                        ]
-                    )
-                }
-            }
-        }
+        // stage ('build'){
+        //     steps{
+        //         sh """
+        //         zip -q -r backend-${appVersion}.zip * -x Jenkinsfile -x backend-${appVersion}.zip
+        //         ls -ltr
+        //         """
+        //     }
+        // }    
+        // stage('Nexus Artifact Upload'){
+        //     steps{
+        //         script{
+        //             nexusArtifactUploader(
+        //                 nexusVersion: 'nexus3',
+        //                 protocol: 'http',
+        //                 nexusUrl: "${nexusUrl}",
+        //                 groupId: 'com.expense',
+        //                 version: "${appVersion}",
+        //                 repository: "backend",
+        //                 credentialsId: 'nexus-auth',
+        //                 artifacts: [
+        //                     [artifactId: "backend" ,
+        //                     classifier: '',
+        //                     file: "backend-" + "${appVersion}" + '.zip',
+        //                     type: 'zip']
+        //                 ]
+        //             )
+        //         }
+        //     }
+        // }
         stage('deploy'){
             steps{
                 script{
