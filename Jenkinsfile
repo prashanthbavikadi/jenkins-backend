@@ -31,7 +31,7 @@ pipeline {
                """
             }
         } 
-        stage ('build'){
+        stage ('build zip'){
             steps{
                 sh """
                 zip -q -r backend-${appVersion}.zip * -x Jenkinsfile -x backend-${appVersion}.zip
@@ -40,11 +40,11 @@ pipeline {
             }
         }    
 
-          stage ('build'){
+        stage ('build docker'){
             steps{
                 sh """
                 docker build -t  backend:${appVersion} .
-                
+
                 """
             }
         }
@@ -71,16 +71,16 @@ pipeline {
         //         }
         //     }
         // }
-        stage('deploy'){
-            steps{
-                script{
-                    def params= [
-                    string(name: 'appVersion', value: "${appVersion}")
-                ]    
-                    build job: 'backend-deploy', parameters: params, wait:false
-                }
-            }
-        }
+        // stage('deploy'){
+        //     steps{
+        //         script{
+        //             def params= [
+        //             string(name: 'appVersion', value: "${appVersion}")
+        //         ]    
+        //             build job: 'backend-deploy', parameters: params, wait:false
+        //         }
+        //     }
+        // }
     }    
     post {
         always {
