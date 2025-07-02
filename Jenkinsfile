@@ -8,9 +8,10 @@ pipeline {
         ansiColor('xterm')
     }
     environment {
-        def appVersion = '' //decalartaive
+        def appVersion = '' //declarative
         nexusUrl = 'nexus.jpaws10s.online:8081'
-        region = "us-east-1" 
+        region = "us-east-1" // AWS Region
+        aws_account_id = '588738605449' // AWS Account ID
     }
     stages {
         stage('read the version'){
@@ -43,8 +44,11 @@ pipeline {
         stage ('build docker'){
             steps{
                 sh """
-                docker build -t  backend:${appVersion} .
+                aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${aws_account_id}.dkr.ecr.${region}.amazonaws.com
+                
+                docker build -t ${aws_account_id}.dkr.ecr.${region}.amazonaws.com/expense-backend:${appVersion} .
 
+                 docker push ${aws_account_id}.dkr.ecr.${region}.amazonaws.com/expense-backend:${appVersion}
                 """
             }
         }
