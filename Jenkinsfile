@@ -39,27 +39,38 @@ pipeline {
                 """
             }
         }    
-        stage('Nexus Artifact Upload'){
+
+          stage ('build'){
             steps{
-                script{
-                    nexusArtifactUploader(
-                        nexusVersion: 'nexus3',
-                        protocol: 'http',
-                        nexusUrl: "${nexusUrl}",
-                        groupId: 'com.expense',
-                        version: "${appVersion}",
-                        repository: "backend",
-                        credentialsId: 'nexus-auth',
-                        artifacts: [
-                            [artifactId: "backend" ,
-                            classifier: '',
-                            file: "backend-" + "${appVersion}" + '.zip',
-                            type: 'zip']
-                        ]
-                    )
-                }
+                sh """
+                docker build -t  backend:${appVersion} .
+                
+                """
             }
         }
+
+
+        // stage('Nexus Artifact Upload'){
+        //     steps{
+        //         script{
+        //             nexusArtifactUploader(
+        //                 nexusVersion: 'nexus3',
+        //                 protocol: 'http',
+        //                 nexusUrl: "${nexusUrl}",
+        //                 groupId: 'com.expense',
+        //                 version: "${appVersion}",
+        //                 repository: "backend",
+        //                 credentialsId: 'nexus-auth',
+        //                 artifacts: [
+        //                     [artifactId: "backend" ,
+        //                     classifier: '',
+        //                     file: "backend-" + "${appVersion}" + '.zip',
+        //                     type: 'zip']
+        //                 ]
+        //             )
+        //         }
+        //     }
+        // }
         stage('deploy'){
             steps{
                 script{
