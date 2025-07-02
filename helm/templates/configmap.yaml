@@ -1,0 +1,16 @@
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: backend
+#   namespace: expense
+# data:
+#   #DB_HOST: mysql # mysql component service name
+#   DB_HOST: 588738605449.dkr.ecr.us-east-1.amazonaws.com/expense-backend:latest
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend
+  namespace: expense
+data:
+  DB_HOST: db-dev.daws78s.online
