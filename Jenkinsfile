@@ -10,8 +10,8 @@ pipeline {
     environment {
         def appVersion = '' //declarative
         nexusUrl = 'nexus.jpaws10s.online:8081'
-        region = "us-east-1" // AWS Region
-        aws_account_id = '588738605449' // AWS Account ID
+        username = 'prashanth3010'
+        password = 'Bunny@3010'
     }
     stages {
         stage('read the version'){
@@ -44,25 +44,25 @@ pipeline {
         stage ('build docker'){
             steps{
                 sh """
-                aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${aws_account_id}.dkr.ecr.${region}.amazonaws.com
-                
-                docker build -t ${aws_account_id}.dkr.ecr.${region}.amazonaws.com/expense-backend:${appVersion} .
+                docker login -u ${username} --password=${password}
 
-                 docker push ${aws_account_id}.dkr.ecr.${region}.amazonaws.com/expense-backend:${appVersion}
+                docker build -t ${username}/backend:${appVersion} .
+
+                docker push ${username}/backend:${appVersion}
                 """
             }
         }
 
-        stage('Deploy'){
-            steps{
-                sh """
-                    aws eks update-kubeconfig --region us-east-1 --name expense-dev
-                    cd helm
-                    sed -i 's/IMAGE_VERSION/${appVersion}/g' values.yaml
-                    helm install backend .
-                """
-            }
-        }
+        // stage('Deploy'){
+        //     steps{
+        //         sh """
+        //             aws eks update-kubeconfig --region us-east-1 --name expense-dev
+        //             cd helm
+        //             sed -i 's/IMAGE_VERSION/${appVersion}/g' values.yaml
+        //             helm install backend .
+        //         """
+        //     }
+        // }
 
 
         // stage('Nexus Artifact Upload'){
